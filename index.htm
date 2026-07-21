@@ -11,10 +11,27 @@
 
     <button id="generateBtn">Generate Lore</button>
     <script>
-        const fileInput = document.getElementById("cardPicker");
         const actionBtn = document.getElementById("generateBtn");
         actionBtn.addEventListener("click", function () {
-            alert(fileInput.value);
+            const fileInput = document.getElementById("cardPicker");
+            const theFile = fileInput.files[0];
+
+            if (!theFile) {
+                alert("Hey! Pick a character card file first!");
+                return;
+            }
+
+            const destBox = new FormData();
+            destBox.append('characterCard', theFile);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: destBox
+
+            }).then(function (response) {
+                alert("FILE CREATED!")
+            });
+  
         });
     </script>
 </body>
