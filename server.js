@@ -12,9 +12,12 @@ const server = http.createServer(function (request, response) {
         const form = new formidable.IncomingForm();
 
         form.parse(request, function (error, fields, files) {
-
             const uploadedFile = files.characterCard[0];
-            console.log("we successfully unpacked: " + uploadedFile.originalFilename);
+            const oldLoc = uploadedFile.filepath;
+            const newLoc = './' + uploadedFile.originalFilename;
+
+            fs.copyFileSync(oldLoc, newLoc);
+            console.log("success! saved file to: " + newLoc);
 
             response.writeHead(200);
             response.end("Success");
